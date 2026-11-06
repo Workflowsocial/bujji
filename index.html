@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Vaish</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7E8EE; --bg-2: #EEDCEB; --ink: #3E2443; --ink-soft: #6E5272;
+    --rose: #C27A95; --lilac: #B3A2D4; --flame: #F4C46A; --paper: #FFF8FA; --wax: #EFE3D3;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #22152A; --bg-2: #2D1C35; --ink: #F5DDE7; --ink-soft: #C8AFC4;
+      --rose: #E09AB3; --lilac: #9C8BC4; --flame: #F7CF7E; --paper: #2F1F37; --wax: #E8DAC6;
+      color-scheme: dark;
+    }
+  }
+  *, *::before, *::after { box-sizing: inherit; margin: 0; }
+  body {
+    background: radial-gradient(120% 80% at 50% 0%, var(--bg-2), var(--bg) 60%) fixed, var(--bg);
+    color: var(--ink);
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-size: 1.25rem; line-height: 1.65;
+    min-height: 100vh; overflow-x: hidden;
+  }
+  .small { font-family: "Karla", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: .9rem; letter-spacing: .01em; }
+  [hidden] { display: none !important; }
+
+  /* Countdown screen */
+  .gate {
+    min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 3rem 1.5rem;
+    transition: opacity 1s ease;
+  }
+  .gate.leaving { opacity: 0; }
+  .gate .lead { font-style: italic; font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.2; margin-bottom: 2.5rem; }
+  .clock { display: flex; justify-content: center; gap: clamp(.75rem, 4vw, 2.5rem); }
+  .unit { min-width: 3.2ch; }
+  .num {
+    display: block; font-size: clamp(3rem, 14vw, 7rem); line-height: 1;
+    font-variant-numeric: tabular-nums; font-weight: 400;
+  }
+  .unit .small { color: var(--ink-soft); }
+  .gate .note { color: var(--ink-soft); margin-top: 2.5rem; }
+
+  /* Hero */
+  .hero { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 3rem 1.5rem; }
+  .hero.enter { animation: rise 1.4s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .date { color: var(--ink-soft); margin-bottom: 1.25rem; }
+  h1 { font-weight: 400; font-style: italic; font-size: clamp(3.4rem, 13vw, 8.5rem); line-height: .95; letter-spacing: -.02em; }
+  h1 .line2 { display: block; color: var(--rose); }
+
+  .cake { margin: 2.5rem auto 1.5rem; width: 120px; cursor: pointer; background: none; border: 0; padding: 0; display: block; }
+  .cake:focus-visible, .btn:focus-visible { outline: 2px solid var(--rose); outline-offset: 6px; border-radius: 8px; }
+  .cake svg { width: 100%; height: auto; overflow: visible; }
+  .flame { transform-origin: 60px 52px; animation: flicker 1.8s ease-in-out infinite; }
+  .glow { animation: glow 1.8s ease-in-out infinite; }
+  @keyframes flicker { 0%,100% { transform: scale(1) rotate(-2deg); } 50% { transform: scale(1.06, .94) rotate(2deg); } }
+  @keyframes glow { 0%,100% { opacity: .55; } 50% { opacity: .8; } }
+  .out .flame, .out .glow { opacity: 0; transition: opacity .35s ease; animation: none; }
+  .smoke { opacity: 0; }
+  .out .smoke { animation: smoke 2.2s ease-out forwards; }
+  @keyframes smoke { 0% { opacity: .7; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-40px) scaleX(1.6); } }
+
+  .btn {
+    font-family: "Karla", system-ui, sans-serif; font-size: .95rem; color: var(--ink);
+    background: transparent; border: 1px solid var(--rose); border-radius: 999px;
+    padding: .7rem 1.4rem; cursor: pointer; transition: background .2s, color .2s;
+  }
+  .btn:hover { background: var(--rose); color: var(--paper); }
+  .hint { color: var(--ink-soft); margin-top: .9rem; min-height: 1.4em; }
+
+  /* Letter */
+  .letter-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 1.2s cubic-bezier(.2,.7,.2,1); }
+  .letter-wrap.open { grid-template-rows: 1fr; }
+  .letter-inner { overflow: hidden; }
+  .letter {
+    max-width: 36rem; margin: 2rem auto 4rem; padding: 3rem 2rem 3.5rem;
+    background: var(--paper); border-radius: 4px 4px 28px 4px; position: relative;
+    box-shadow: 0 30px 60px -30px rgba(62, 36, 67, .35);
+  }
+  .seal {
+    position: absolute; top: -26px; left: 50%; transform: translateX(-50%);
+    width: 52px; height: 52px; border-radius: 50%; background: var(--rose); color: var(--paper);
+    display: grid; place-items: center; font-style: italic; font-size: 1.5rem;
+  }
+  .letter p + p { margin-top: 1.1rem; }
+  .letter .greet { font-style: italic; font-size: 1.6rem; margin-bottom: 1.2rem; }
+  .sign { margin-top: 2rem; font-style: italic; text-align: right; }
+  .sign span { display: block; font-size: 1.5rem; color: var(--rose); }
+
+  .wishes { max-width: 36rem; margin: 0 auto; padding: 0 1.5rem 3rem; text-align: center; }
+  .wishes h2 { font-weight: 400; font-style: italic; font-size: 2.2rem; margin-bottom: 1.5rem; }
+  .wishes ul { list-style: none; padding: 0; }
+  .wishes li { padding: .9rem 0; }
+  .wishes li + li { border-top: 1px solid rgba(194, 122, 149, .3); }
+
+  .end { text-align: center; padding: 2rem 1.5rem 5rem; }
+  .end p { font-style: italic; font-size: clamp(2rem, 7vw, 3.2rem); line-height: 1.1; }
+  .end .small { color: var(--ink-soft); margin-top: 1rem; font-style: normal; font-size: .9rem; }
+
+  /* Confetti */
+  .bit { position: fixed; top: -30px; pointer-events: none; z-index: 5; width: 10px; height: 14px; border-radius: 3px; opacity: .85; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translate(var(--dx), 110vh) rotate(var(--rot)); opacity: 0; } }
+
+  @media (max-width: 480px) {
+    .letter { padding: 2.75rem 1.4rem 3rem; border-radius: 4px 4px 20px 4px; }
+    body { font-size: 1.15rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flame, .glow, .hero.enter { animation: none; }
+    .letter-wrap, .gate { transition: none; }
+    .bit { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Countdown screen -->
+<section class="gate" id="gate" hidden>
+  <div>
+    <p class="lead">Hey Vaish, something’s waiting for you.</p>
+    <div class="clock" role="timer" aria-live="off">
+      <div class="unit"><span class="num" id="h">00</span><span class="small">hours</span></div>
+      <div class="unit"><span class="num" id="m">00</span><span class="small">minutes</span></div>
+      <div class="unit"><span class="num" id="s">00</span><span class="small">seconds</span></div>
+    </div>
+    <p class="note small">Come back at midnight. No peeking.</p>
+  </div>
+</section>
+
+<!-- Birthday page -->
+<main id="party" hidden>
+  <header class="hero" id="hero">
+    <div>
+      <p class="date small">7 November</p>
+      <h1>Happy birthday,<span class="line2">Vaish</span></h1>
+
+      <button class="cake" id="cake" aria-label="Blow out the candle">
+        <svg viewBox="0 0 120 150" aria-hidden="true">
+          <ellipse class="glow" cx="60" cy="40" rx="34" ry="34" fill="var(--flame)" opacity=".6" style="filter: blur(14px)"/>
+          <path class="smoke" d="M60 50 q-6 -10 0 -20 q6 -10 0 -20" stroke="var(--ink-soft)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path class="flame" d="M60 22 C67 34 68 44 60 52 C52 44 53 34 60 22 Z" fill="var(--flame)"/>
+          <line x1="60" y1="52" x2="60" y2="58" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
+          <rect x="52" y="58" width="16" height="72" rx="3" fill="var(--wax)"/>
+          <path d="M52 74 l16 -8 M52 92 l16 -8 M52 110 l16 -8" stroke="var(--rose)" stroke-width="4" opacity=".7"/>
+          <ellipse cx="60" cy="134" rx="36" ry="7" fill="var(--rose)" opacity=".25"/>
+        </svg>
+      </button>
+
+      <button class="btn" id="blow">Make a wish and blow</button>
+      <p class="hint small" id="hint" aria-live="polite"></p>
+    </div>
+  </header>
+
+  <div class="letter-wrap" id="letterWrap">
+    <div class="letter-inner">
+      <article class="letter" aria-label="A letter for Vaish">
+        <div class="seal" aria-hidden="true">V</div>
+        <p class="greet">Dear Vaish,</p>
+        <p>Happy birthday! Another year older, and somehow still the same person who can make me laugh at the most random things, at the most random hours.</p>
+        <p>I don’t say it enough, but thank you for being you. For the long talks, the pointless arguments you always think you won, the advice I pretend I didn’t need, and for just being there, every single time.</p>
+        <p>Not everyone gets a friend who actually gets them. I’m really glad I got you.</p>
+        <p>So today, no overthinking, no stress. Just cake, good food, and being spoiled a little. You’ve earned it.</p>
+        <p class="sign">Always in your corner,<span>your partner in crime</span></p>
+      </article>
+
+      <section class="wishes" aria-labelledby="wishTitle">
+        <h2 id="wishTitle">What I wish for you this year</h2>
+        <ul>
+          <li>Lazy mornings, good coffee, and zero alarms on weekends.</li>
+          <li>Every plan you’ve been quietly working on finally falling into place.</li>
+          <li>Good health, less worry, and way more reasons to laugh.</li>
+          <li>And a lot more chaotic memories with me, obviously.</li>
+        </ul>
+      </section>
+
+      <footer class="end">
+        <p>Happy birthday, Vaish.</p>
+        <p class="small">Here’s to another year of you being awesome.</p>
+      </footer>
+    </div>
+  </div>
+</main>
+
+<script>
+  // ---- Settings ----
+  // Birthday: 7 November, midnight in her local time.
+  // Add ?preview to the URL to skip the countdown while testing.
+  const BIRTHDAY_MONTH = 10; // 0 = January, so 10 = November
+  const BIRTHDAY_DAY = 7;
+
+  const gate = document.getElementById('gate');
+  const party = document.getElementById('party');
+  const hero = document.getElementById('hero');
+
+  function targetDate() {
+    const now = new Date();
+    const thisYear = new Date(now.getFullYear(), BIRTHDAY_MONTH, BIRTHDAY_DAY, 0, 0, 0);
+    const dayAfter = new Date(now.getFullYear(), BIRTHDAY_MONTH, BIRTHDAY_DAY + 1, 0, 0, 0);
+    // If the birthday has started or already passed this year, no countdown needed.
+    if (now >= thisYear) return null;
+    return thisYear;
+  }
+
+  function showParty(animate) {
+    gate.hidden = true;
+    party.hidden = false;
+    if (animate) hero.classList.add('enter');
+    window.scrollTo(0, 0);
+  }
+
+  const preview = new URLSearchParams(location.search).has('preview');
+  const target = targetDate();
+
+  if (preview || !target) {
+    showParty(false);
+  } else {
+    gate.hidden = false;
+    const pad = n => String(n).padStart(2, '0');
+    const hEl = document.getElementById('h'), mEl = document.getElementById('m'), sEl = document.getElementById('s');
+    const timer = setInterval(tick, 1000);
+    function tick() {
+      let left = Math.max(0, Math.floor((target - new Date()) / 1000));
+      const h = Math.floor(left / 3600); left %= 3600;
+      const m = Math.floor(left / 60); const s = left % 60;
+      hEl.textContent = pad(h); mEl.textContent = pad(m); sEl.textContent = pad(s);
+      if (h === 0 && m === 0 && s === 0) {
+        clearInterval(timer);
+        gate.classList.add('leaving');
+        setTimeout(() => showParty(true), 1000);
+      }
+    }
+    tick();
+  }
+
+  // ---- Candle ----
+  const cake = document.getElementById('cake');
+  const blowBtn = document.getElementById('blow');
+  const hint = document.getElementById('hint');
+  const wrap = document.getElementById('letterWrap');
+  let blown = false;
+
+  function confetti() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const colors = ['var(--rose)', 'var(--lilac)', 'var(--flame)'];
+    for (let i = 0; i < 40; i++) {
+      const b = document.createElement('span');
+      b.className = 'bit';
+      b.style.left = Math.random() * 100 + 'vw';
+      b.style.background = colors[i % colors.length];
+      b.style.setProperty('--dx', (Math.random() * 120 - 60) + 'px');
+      b.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+      b.style.animationDuration = (4 + Math.random() * 4) + 's';
+      b.style.animationDelay = (Math.random() * 1.5) + 's';
+      document.body.appendChild(b);
+      b.addEventListener('animationend', () => b.remove());
+    }
+  }
+
+  function blow() {
+    if (blown) { wrap.scrollIntoView({ behavior: 'smooth' }); return; }
+    blown = true;
+    cake.classList.add('out');
+    blowBtn.textContent = 'Read your letter';
+    hint.textContent = 'Wish sent. Now scroll down.';
+    confetti();
+    setTimeout(() => {
+      wrap.classList.add('open');
+      setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth' }), 700);
+    }, 900);
+  }
+
+  cake.addEventListener('click', blow);
+  blowBtn.addEventListener('click', blow);
+</script>
+</body>
+</html>
